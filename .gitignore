@@ -1,0 +1,18 @@
+# Compiled files
+*.class
+*.jar
+*.zip
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+out/
+target/
+build/
