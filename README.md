@@ -1,29 +1,17 @@
 # Finance Manager
 
-Command-line app to manage personal income and expenses, built to practice back-end fundamentals.
+This is a simple command-line app to manage personal income and expenses. I am building it to practice back-end fundamentals.
 
-## Features
+With this app, you can add a transaction. A transaction can be income or an expense. Each one has a description, an amount, a date, and a category. You can also see a list of all your transactions and check your total balance.
 
-- Register transactions (income or expense) with description, amount, date and category
-- List all transactions
-- View total balance
+The project uses the Repository pattern. This means the code that saves data is separate from the code that runs the app logic. Right now, the data is stored in memory, using a list.
 
-## Architecture
+- `Transaction.java` — the model of a transaction
+- `TransactionRepository.java` — the interface with the data operations
+- `TransactionRepositoryMemory.java` — saves the transactions in memory
+- `Main.java` — the terminal menu
 
-Built with the Repository pattern, separating data access from business logic.
-
-- `Transaction.java` — model
-- `TransactionRepository.java` — interface
-- `TransactionRepositoryMemory.java` — in-memory implementation
-- `Main.java` — terminal menu
-
-## Roadmap
-
-- [x] Pure Java, in-memory storage
-- [ ] MySQL persistence with JDBC
-- [ ] REST API with Spring Boot
-- [ ] Frontend (React or Thymeleaf)
-- [ ] Automatic categorization with AI
+This is only the first phase of the project. Next, I want to save the data in a MySQL database, using JDBC. After that, I want to build a REST API with Spring Boot. Later, I want to add a frontend and automatic categorization with AI.
 
 ## Tech stack
 
