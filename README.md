@@ -16,9 +16,10 @@ The project uses the Repository pattern: the code that stores data is separate f
 
 - [x] `TransactionType.java`: enum with `INCOME` and `EXPENSE`
 - [x] `Transaction.java`: the transaction model, with field validation
-- [ ] `TransactionRepository.java`: interface with the data operations
-- [ ] `TransactionRepositoryMemory.java`: in-memory implementation
-- [ ] `Main.java`: interactive terminal menu
+- [x] `TransactionRepository.java`: interface with the data operations
+- [x] `TransactionRepositoryMemory.java`: in-memory implementation
+- [x] `BalanceCalculator.java`: calculates the total balance
+- [ ] `Main.java`: interactive terminal menu  
 
 ## Tech stack
 
