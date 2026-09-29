@@ -1,18 +1,28 @@
 # Finance Manager
 
-This is a simple command-line app to manage personal income and expenses. I am building it to practice back-end fundamentals.
+A simple command-line app to manage personal income and expenses, built with pure Java to practice back-end fundamentals.
 
-With this app, you can add a transaction. A transaction can be income or an expense. Each one has a description, an amount, a date, and a category. You can also see a list of all your transactions and check your total balance.
+## Features
 
-The project uses the Repository pattern. This means the code that saves data is separate from the code that runs the app logic. Right now, the data is stored in memory, using a list.
+- Add a transaction (income or expense) with a description, a value, a date and a category
+- List all transactions
+- Check the total balance
 
-- `Transaction.java` — the model of a transaction
-- `TransactionRepository.java` — the interface with the data operations
-- `TransactionRepositoryMemory.java` — saves the transactions in memory
-- `Main.java` — the terminal menu
+## Architecture
 
-This is only the first phase of the project. Next, I want to save the data in a MySQL database, using JDBC. After that, I want to build a REST API with Spring Boot. Later, I want to add a frontend and automatic categorization with AI.
+The project uses the Repository pattern: the code that stores data is separate from the code that runs the app logic. For now, data is stored in memory using a list, which makes it easy to swap for a database later.
+
+## Status
+
+- [x] `TransactionType.java`: enum with `INCOME` and `EXPENSE`
+- [x] `Transaction.java`: the transaction model, with field validation
+- [ ] `TransactionRepository.java`: interface with the data operations
+- [ ] `TransactionRepositoryMemory.java`: in-memory implementation
+- [ ] `Main.java`: interactive terminal menu
 
 ## Tech stack
 
-[![JAVA](https://img.shields.io/badge/java-000000?style=for-the-badge&logo=openjdk&logoColor=white)]()
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+
+- Java (JDK: 25)
+- Git with Conventional Commits
