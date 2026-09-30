@@ -9,6 +9,7 @@ import service.BalanceCalculator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -41,29 +42,37 @@ public class Main {
             switch (choice) {
 
                 case '1': {
-                    System.out.print("Description: ");
-                    String description = sc.nextLine();
-                    System.out.print("Value: ");
-                    BigDecimal value = new BigDecimal(sc.nextLine());
-                    System.out.print("Date: ");
-                    LocalDate date = LocalDate.parse(sc.nextLine(), dtf);
-                    System.out.print("Category: ");
-                    String category = sc.nextLine();
-                    System.out.print("Type (1 - Income, 2 - Expense): ");
-                    String typeInput = sc.nextLine();
-                    TransactionType type;
-                    if (typeInput.equals("1")) {
-                        type = TransactionType.INCOME;
-                    } else if (typeInput.equals("2")) {
-                        type = TransactionType.EXPENSE;
-                    } else {
-                        throw new IllegalArgumentException("Invalid type");
+                    try {
+                        System.out.print("Description: ");
+                        String description = sc.nextLine();
+                        System.out.print("Value: ");
+                        BigDecimal value = new BigDecimal(sc.nextLine());
+                        System.out.print("Date (use dd/MM/yyyy): ");
+                        LocalDate date = LocalDate.parse(sc.nextLine(), dtf);
+                        System.out.print("Category: ");
+                        String category = sc.nextLine();
+                        System.out.print("Type (1 - Income, 2 - Expense): ");
+                        String typeInput = sc.nextLine();
+                        TransactionType type;
+                        if (typeInput.equals("1")) {
+                            type = TransactionType.INCOME;
+                        } else if (typeInput.equals("2")) {
+                            type = TransactionType.EXPENSE;
+                        } else {
+                            throw new IllegalArgumentException("Invalid type");
+                        }
+
+                        Transaction transaction = repository.create(description, value, date, category, type);
+
+                        System.out.println("\nTransaction has been created.");
+                        System.out.println(transaction.toString() + "\n");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid value. Use numbers with a period, like 50.25.\n");
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date. Use dd/MM/yyyy.\n");
+                    } catch (IllegalArgumentException e) {
+                        throw new IllegalArgumentException("Invalid type. Use 1 for income or 2 for expense");
                     }
-
-                    Transaction transaction = repository.create(description, value, date, category, type);
-
-                    System.out.println("\nTransaction has been created.");
-                    System.out.println(transaction.toString() + "\n");
                     break;
                 }
 
