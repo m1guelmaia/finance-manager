@@ -19,7 +19,7 @@ The project uses the Repository pattern: the code that stores data is separate f
 - [x] `TransactionRepository.java`: interface with the data operations
 - [x] `TransactionRepositoryMemory.java`: in-memory implementation
 - [x] `BalanceCalculator.java`: calculates the total balance
-- [ ] `Main.java`: interactive terminal menu  
+- [x] `Main.java`: interactive terminal menu
 
 ## Tech stack
 
