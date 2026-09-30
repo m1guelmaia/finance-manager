@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ public class Main {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.US);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu", Locale.US).withResolverStyle(ResolverStyle.STRICT);
 
         TransactionRepository repository = new TransactionRepositoryMemory();
         BalanceCalculator balanceCalculator = new BalanceCalculator();
@@ -59,7 +60,7 @@ public class Main {
                         } else if (typeInput.equals("2")) {
                             type = TransactionType.EXPENSE;
                         } else {
-                            throw new IllegalArgumentException("Invalid type");
+                            throw new IllegalArgumentException("Invalid type. Use 1 for income or 2 for expense");
                         }
 
                         Transaction transaction = repository.create(description, value, date, category, type);
@@ -71,7 +72,7 @@ public class Main {
                     } catch (DateTimeParseException e) {
                         System.out.println("Invalid date. Use dd/MM/yyyy.\n");
                     } catch (IllegalArgumentException e) {
-                        throw new IllegalArgumentException("Invalid type. Use 1 for income or 2 for expense");
+                        System.out.println(e.getMessage() + "\n");
                     }
                     break;
                 }
@@ -105,7 +106,6 @@ public class Main {
                 }
             }
         }
-
         sc.close();
     }
 }
