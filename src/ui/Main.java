@@ -84,25 +84,35 @@ public class Main {
                             System.out.println("Invalid date. Use dd/MM/yyyy.\n");
                         } catch (IllegalArgumentException e) {
                             System.out.println(e.getMessage() + "\n");
+                        } catch (RuntimeException e) {
+                            System.out.println("Could not create transaction. Please try again.\n");
                         }
                         break;
                     }
 
                     case "2": {
-                        List<Transaction> transactions = repository.findAll();
-                        if (transactions.isEmpty()) {
-                            System.out.println("No transactions found.\n");
-                        } else {
-                            for (Transaction transaction : transactions) {
-                                System.out.println(transaction + "\n");
+                        try {
+                            List<Transaction> transactions = repository.findAll();
+                            if (transactions.isEmpty()) {
+                                System.out.println("No transactions found.\n");
+                            } else {
+                                for (Transaction transaction : transactions) {
+                                    System.out.println(transaction + "\n");
+                                }
                             }
+                        } catch (RuntimeException e) {
+                            System.out.println("Could not load transactions. Please try again.\n");
                         }
                         break;
                     }
 
                     case "3": {
-                        BigDecimal balance = balanceCalculator.calculate(repository.findAll());
-                        System.out.println("Balance: R$ " + String.format("%.2f", balance) + "\n");
+                        try {
+                            BigDecimal balance = balanceCalculator.calculate(repository.findAll());
+                            System.out.println("Balance: R$ " + String.format("%.2f", balance) + "\n");
+                        } catch (RuntimeException e) {
+                            System.out.println("Could not calculate balance. Please try again.\n");
+                        }
                         break;
                     }
 
