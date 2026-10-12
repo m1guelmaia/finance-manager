@@ -33,8 +33,8 @@ public class Main {
             TransactionRepository repository = new TransactionRepositoryJdbc(connection);
             BalanceCalculator balanceCalculator = new BalanceCalculator();
 
-            char choice = ' ';
-            while (choice != '4') {
+            String option = "";
+            while (!option.equals("4")) {
 
                 System.out.println("===== FINANCE MANAGER =====\n");
                 System.out.println("1 - Add transaction");
@@ -43,12 +43,17 @@ public class Main {
                 System.out.println("4 - Exit\n");
                 System.out.println("===========================\n");
                 System.out.print("Choose an option: ");
-                choice = sc.next().charAt(0);
-                sc.nextLine();
+                option = sc.nextLine();
+                if (option.isBlank()) {
+                    System.out.println("Invalid option.\n");
+                    continue;
+                }
 
-                switch (choice) {
+                option = option.substring(0, 1);
 
-                    case '1': {
+                switch (option) {
+
+                    case "1": {
                         try {
                             System.out.print("Description: ");
                             String description = sc.nextLine();
@@ -72,7 +77,7 @@ public class Main {
                             Transaction transaction = repository.create(description, value, date, category, type);
 
                             System.out.println("\nTransaction has been created.");
-                            System.out.println(transaction.toString() + "\n");
+                            System.out.println(transaction + "\n");
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid value. Use numbers with a period, like 50.25.\n");
                         } catch (DateTimeParseException e) {
@@ -83,32 +88,32 @@ public class Main {
                         break;
                     }
 
-                    case '2': {
+                    case "2": {
                         List<Transaction> transactions = repository.findAll();
                         if (transactions.isEmpty()) {
                             System.out.println("No transactions found.\n");
                         } else {
                             for (Transaction transaction : transactions) {
-                                System.out.println(transaction.toString() + "\n");
+                                System.out.println(transaction + "\n");
                             }
                         }
                         break;
                     }
 
-                    case '3': {
+                    case "3": {
                         BigDecimal balance = balanceCalculator.calculate(repository.findAll());
-                        System.out.println("Balance: " + String.format("%.2f", balance) + "\n");
+                        System.out.println("Balance: R$ " + String.format("%.2f", balance) + "\n");
                         break;
                     }
 
-                    case '4': {
-                        System.out.println("Thanks for using our program.");
+                    case "4": {
+                        System.out.println("Thanks for using Finance Manager.");
                         System.out.println("Exiting...");
                         break;
                     }
 
                     default: {
-                        System.out.println("Invalid choice.\n");
+                        System.out.println("Invalid option.\n");
                     }
                 }
             }
