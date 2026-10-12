@@ -4,10 +4,7 @@ import model.Transaction;
 import model.TransactionType;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +19,27 @@ public class TransactionRepositoryJdbc implements TransactionRepository {
 
     @Override
     public Transaction create(String description, BigDecimal value, LocalDate date, String category, TransactionType type) {
-        return null;
+        String sql = "INSERT INTO transactions (description, value, transaction_date, category, transaction_type) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, description);
+            preparedStatement.setBigDecimal(2, value);
+            preparedStatement.setDate(3, Date.valueOf(date));
+            preparedStatement.setString(4, category);
+            preparedStatement.setString(5, type.name());
+
+            preparedStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    long id = generatedKeys.getLong(1);
+                    return new Transaction(id, description, value, date, category, type);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating transaction", e);
+        }
+        throw new RuntimeException("Error creating transaction: no ID returned");
     }
 
     @Override
