@@ -102,6 +102,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return String.format(Locale.US, "[%d] %s | %s | %s | %s | R$ %.2f", id, FORMATTER.format(date), type, category, description, value);
+        return String.format(Locale.US, "[%d] %s | R$ %.2f | %s | %s | %s", id, description, value, FORMATTER.format(date), category, type);
     }
 }
