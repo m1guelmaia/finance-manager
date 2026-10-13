@@ -98,13 +98,11 @@ public class Main {
 
     private static TransactionType readTransactionType(Scanner sc) {
         String type = sc.nextLine();
-        if (type.equals("1")) {
-            return TransactionType.INCOME;
-        } else if (type.equals("2")) {
-            return TransactionType.EXPENSE;
-        } else {
-            throw new IllegalArgumentException("Invalid type. Use 1 for income or 2 for expense");
-        }
+        return switch (type) {
+            case "1" -> TransactionType.INCOME;
+            case "2" -> TransactionType.EXPENSE;
+            default -> throw new IllegalArgumentException("Invalid type. Use 1 for income or 2 for expense.");
+        };
     }
 
     private static void addTransaction(Scanner sc, DateTimeFormatter dtf, TransactionRepository repository) {
