@@ -4,7 +4,12 @@ import model.Transaction;
 import model.TransactionType;
 
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +51,7 @@ public class TransactionRepositoryJdbc implements TransactionRepository {
     public List<Transaction> findAll() {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT id, description, value, transaction_date, category, transaction_type FROM transactions";
-
-
+        
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
