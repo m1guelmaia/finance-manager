@@ -26,4 +26,9 @@ public class TransactionRepositoryMemory implements TransactionRepository {
     public List<Transaction> findAll() {
         return List.copyOf(transactions);
     }
+
+    @Override
+    public boolean deleteById(long id) {
+        return transactions.removeIf(transaction -> transaction.getId() == id);
+    }
 }

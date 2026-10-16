@@ -12,4 +12,6 @@ public interface TransactionRepository {
     Transaction create(String description, BigDecimal value, LocalDate date, String category, TransactionType type);
 
     List<Transaction> findAll();
+
+    boolean deleteById(long id);
 }

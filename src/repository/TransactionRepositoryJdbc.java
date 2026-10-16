@@ -73,4 +73,24 @@ public class TransactionRepositoryJdbc implements TransactionRepository {
         }
         return transactions;
     }
+
+    @Override
+    public boolean deleteById(long id) {
+        String sql = "DELETE FROM transactions WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setLong(1, id);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting transaction", e);
+        }
+
+    }
 }
